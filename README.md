@@ -1,4 +1,4 @@
-# LANDI FT0360 – lokale Home-Assistant-Integration
+# FT0360 Wetterstation – lokale Home-Assistant-Integration für LANDI & OEM
 
 ![LANDI FT0360 Wetterstation](assets/ft0360-integration.png)
 
