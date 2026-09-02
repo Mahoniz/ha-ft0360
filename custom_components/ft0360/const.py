@@ -5,6 +5,7 @@ from typing import Final
 DOMAIN: Final = "ft0360"
 
 CONF_SCAN_INTERVAL: Final = "scan_interval"
+CONF_SENSOR_SCOPE: Final = "sensor_scope"
 DEFAULT_SCAN_INTERVAL: Final = 10
 MIN_SCAN_INTERVAL: Final = 5
 MAX_SCAN_INTERVAL: Final = 300
@@ -23,3 +24,12 @@ MODEL: Final = "FT0360"
 DEVICE_NAME: Final = "FT0360"
 
 ATTR_BATTERY_MESSAGES: Final = "messages"
+
+SCOPE_ALL: Final = "all"
+SCOPE_INDOOR: Final = "indoor"
+SCOPE_OUTDOOR: Final = "outdoor"
+SENSOR_SCOPE_OPTIONS: Final = {
+    SCOPE_ALL: "Innen & Aussen",
+    SCOPE_INDOOR: "Nur Innen",
+    SCOPE_OUTDOOR: "Nur Aussen",
+}

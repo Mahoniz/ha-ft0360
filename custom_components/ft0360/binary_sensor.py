@@ -13,7 +13,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from .const import ATTR_BATTERY_MESSAGES
+from .const import ATTR_BATTERY_MESSAGES, CONF_SENSOR_SCOPE, SCOPE_INDOOR
 from .coordinator import FT0360Coordinator
 from .entity import FT0360Entity
 
@@ -30,6 +30,8 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up the FT0360 battery status."""
+    if entry.data.get(CONF_SENSOR_SCOPE) == SCOPE_INDOOR:
+        return
     coordinator: FT0360Coordinator = entry.runtime_data
     async_add_entities([FT0360BatteryLowBinarySensor(coordinator, entry)])
 

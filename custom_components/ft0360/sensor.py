@@ -27,6 +27,7 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
+from .const import CONF_SENSOR_SCOPE, SCOPE_ALL, SCOPE_INDOOR, SCOPE_OUTDOOR
 from .coordinator import FT0360Coordinator, FT0360Data
 from .entity import FT0360Entity
 from .parser import CARDINAL_DIRECTIONS, CONNECTION_STATUS_OPTIONS, degrees_to_cardinal
@@ -234,6 +235,8 @@ CARDINAL_DESCRIPTION = SensorEntityDescription(
     translation_key="wind_direction_cardinal",
 )
 
+INDOOR_SENSOR_KEYS = frozenset({"indoor_temperature", "indoor_humidity"})
+
 DIAGNOSTIC_SENSOR_DESCRIPTIONS: tuple[
     FT0360DiagnosticSensorEntityDescription, ...
 ] = (
@@ -304,14 +307,31 @@ async def async_setup_entry(
 ) -> None:
     """Set up FT0360 sensors."""
     coordinator: FT0360Coordinator = entry.runtime_data
-    async_add_entities(
-        [FT0360Sensor(coordinator, entry, description) for description in SENSOR_DESCRIPTIONS]
-        + [FT0360CardinalDirectionSensor(coordinator, entry)]
-        + [
+    scope = entry.data.get(CONF_SENSOR_SCOPE, SCOPE_ALL)
+    descriptions = SENSOR_DESCRIPTIONS
+    if scope == SCOPE_INDOOR:
+        descriptions = tuple(
+            description
+            for description in SENSOR_DESCRIPTIONS
+            if description.key in INDOOR_SENSOR_KEYS
+        )
+    elif scope == SCOPE_OUTDOOR:
+        descriptions = tuple(
+            description
+            for description in SENSOR_DESCRIPTIONS
+            if description.key not in INDOOR_SENSOR_KEYS
+        )
+
+    entities: list[SensorEntity] = [
+        FT0360Sensor(coordinator, entry, description) for description in descriptions
+    ]
+    if scope != SCOPE_INDOOR:
+        entities.append(FT0360CardinalDirectionSensor(coordinator, entry))
+        entities.extend(
             FT0360DiagnosticSensor(coordinator, entry, description)
             for description in DIAGNOSTIC_SENSOR_DESCRIPTIONS
-        ]
-    )
+        )
+    async_add_entities(entities)
 
 
 class FT0360Sensor(FT0360Entity, SensorEntity):

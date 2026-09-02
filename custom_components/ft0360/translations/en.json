@@ -5,10 +5,11 @@
       "user": {
         "title": "Set up LANDI FT0360",
         "description": "Enter the local IP address or hostname of the weather station.",
-        "data": { "host": "IP address or hostname", "scan_interval": "Polling interval" },
+        "data": { "host": "IP address or hostname", "scan_interval": "Polling interval", "sensor_scope": "Measurement scope" },
         "data_description": {
           "host": "For example 192.168.1.236 or weather-station.local",
-          "scan_interval": "Seconds between updates (5 to 300)"
+          "scan_interval": "Seconds between updates (5 to 300)",
+          "sensor_scope": "Indoor & outdoor for all values, or only the required logical area"
         }
       },
       "reconfigure": {

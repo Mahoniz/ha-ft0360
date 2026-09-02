@@ -23,20 +23,24 @@ from .api import (
 )
 from .const import (
     CONF_SCAN_INTERVAL,
+    CONF_SENSOR_SCOPE,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
     MAX_SCAN_INTERVAL,
     MIN_SCAN_INTERVAL,
+    SCOPE_ALL,
+    SENSOR_SCOPE_OPTIONS,
 )
 from .parser import FT0360StationInfo
 
 _LOGGER = logging.getLogger(__name__)
 
 
-def _schema(host: str = "", interval: int = DEFAULT_SCAN_INTERVAL) -> vol.Schema:
+def _schema(
+    host: str = "", interval: int = DEFAULT_SCAN_INTERVAL, *, include_scope: bool = True
+) -> vol.Schema:
     """Return the user/reconfigure schema."""
-    return vol.Schema(
-        {
+    schema: dict[Any, Any] = {
             vol.Required(CONF_HOST, default=host): str,
             vol.Required(CONF_SCAN_INTERVAL, default=interval): NumberSelector(
                 NumberSelectorConfig(
@@ -48,7 +52,22 @@ def _schema(host: str = "", interval: int = DEFAULT_SCAN_INTERVAL) -> vol.Schema
                 )
             ),
         }
-    )
+    if include_scope:
+        schema[vol.Required(CONF_SENSOR_SCOPE, default=SCOPE_ALL)] = vol.In(
+            SENSOR_SCOPE_OPTIONS
+        )
+    return vol.Schema(schema)
+
+
+def _unique_id(base_id: str, scope: str) -> str:
+    """Return an id that permits indoor and outdoor logical devices."""
+    return base_id if scope == SCOPE_ALL else f"{base_id}_{scope}"
+
+
+def _entry_title(host: str, scope: str) -> str:
+    """Return a clear config entry title for the chosen logical device."""
+    suffix = {"indoor": "Innen", "outdoor": "Aussen"}.get(scope)
+    return f"FT0360 {suffix} ({host})" if suffix else f"FT0360 ({host})"
 
 
 def _options_schema(interval: int) -> vol.Schema:
@@ -92,9 +111,11 @@ class FT0360ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
         host = ""
         interval = DEFAULT_SCAN_INTERVAL
+        scope = SCOPE_ALL
 
         if user_input is not None:
             interval = int(user_input[CONF_SCAN_INTERVAL])
+            scope = str(user_input[CONF_SENSOR_SCOPE])
             try:
                 host = normalize_host(str(user_input[CONF_HOST]))
             except ValueError:
@@ -112,12 +133,12 @@ class FT0360ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     _LOGGER.exception("Unexpected error connecting to FT0360 at %s", host)
                     errors["base"] = "unknown"
                 else:
-                    unique_id = station.mac or host.casefold()
+                    unique_id = _unique_id(station.mac or host.casefold(), scope)
                     await self.async_set_unique_id(unique_id)
                     self._abort_if_unique_id_configured()
                     return self.async_create_entry(
-                        title=f"FT0360 ({host})",
-                        data={CONF_HOST: host},
+                        title=_entry_title(host, scope),
+                        data={CONF_HOST: host, CONF_SENSOR_SCOPE: scope},
                         options={CONF_SCAN_INTERVAL: interval},
                     )
 
@@ -161,19 +182,27 @@ class FT0360ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors["base"] = "unknown"
                 else:
                     if station.mac is not None:
-                        await self.async_set_unique_id(station.mac)
+                        scope = str(entry.data.get(CONF_SENSOR_SCOPE, SCOPE_ALL))
+                        await self.async_set_unique_id(_unique_id(station.mac, scope))
                         self._abort_if_unique_id_mismatch(reason="wrong_device")
                     return self.async_update_and_abort(
                         entry,
-                        title=f"FT0360 ({host})",
-                        data={CONF_HOST: host},
+                        title=_entry_title(
+                            host, str(entry.data.get(CONF_SENSOR_SCOPE, SCOPE_ALL))
+                        ),
+                        data={
+                            CONF_HOST: host,
+                            CONF_SENSOR_SCOPE: entry.data.get(
+                                CONF_SENSOR_SCOPE, SCOPE_ALL
+                            ),
+                        },
                         options={CONF_SCAN_INTERVAL: interval},
                         reason="reconfigure_successful",
                     )
 
         return self.async_show_form(
             step_id="reconfigure",
-            data_schema=_schema(host, interval),
+            data_schema=_schema(host, interval, include_scope=False),
             errors=errors,
         )
 

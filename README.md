@@ -5,6 +5,15 @@
 Diese Custom Component liest die LANDI/FT0360 WiFi-Wetterstation vollständig lokal aus.
 Es werden keine Cloud-Dienste, Konten oder API-Schlüssel benötigt.
 
+## Modell und OEM-Hinweis
+
+**LANDI** vertreibt die Wetterstation in der Schweiz unter eigener Handelsmarke. Die
+WLAN-Konsole identifiziert sich technisch als **FT0360** auf einer ESP8266-basierten
+Plattform und ist auch international als OEM-Gerät beziehungsweise unter anderen
+Handelsmarken erhältlich. Diese Integration richtet sich deshalb nach dem lokalen
+FT0360-Protokoll, nicht nach einem LANDI-Cloud-Dienst: Sie kann auch mit baugleichen
+OEM-Modellen funktionieren, sofern deren lokale Endpunkte kompatibel sind.
+
 Verwendete Endpunkte:
 
 ```text
@@ -23,6 +32,7 @@ Diagnosebericht heruntergeladen wird; er gehört nicht zum regulären Polling.
 ## Funktionen
 
 - Einrichtung über die Home-Assistant-Oberfläche per IP-Adresse oder Hostname
+- Frei wählbarer Messbereich: alle Werte, nur Innen oder nur Aussen
 - Gemeinsames, einstellbares Polling aller Werte (5–300 Sekunden, Standard 10)
 - Stabile Geräte-/Entitätsidentitäten anhand der MAC-Adresse und lesbare Entity-IDs
 - Home-Assistant `DeviceInfo` mit Hersteller, Modell, Firmware-Build und Konfigurations-URL
@@ -146,10 +156,16 @@ config/
 1. **Einstellungen → Geräte & Dienste → Integration hinzufügen** öffnen.
 2. Nach **LANDI FT0360** suchen.
 3. IP-Adresse oder Hostname eintragen, beispielsweise `192.168.1.236`.
-4. Das Abfrageintervall wählen; voreingestellt sind 10 Sekunden.
+4. Den Messbereich wählen: **Innen & Aussen**, **nur Innen** oder **nur Aussen**.
+5. Das Abfrageintervall wählen; voreingestellt sind 10 Sekunden.
 
-Die Integration prüft bei der Einrichtung sowohl `record` als auch `about`. Eine zweite
-Einrichtung derselben Station wird anhand der MAC-Adresse verhindert. Firmware- und
+Die Integration prüft bei der Einrichtung sowohl `record` als auch `about`. Für dieselbe
+Station kannst du je eine Einrichtung mit **nur Innen** und **nur Aussen** anlegen. Damit
+entstehen zwei getrennte Home-Assistant-Geräte; das Innengerät kannst du danach einem Raum
+zuordnen. Die Innen-Einrichtung zeigt ausschliesslich Temperatur und Luftfeuchtigkeit. Die
+Aussen-Einrichtung enthält die übrigen Wetterwerte sowie Batterie- und Netzwerkdiagnosen.
+Eine zweite Einrichtung mit demselben Messbereich wird weiterhin anhand der MAC-Adresse
+verhindert. Firmware- und
 Verbindungsdaten sind optionale Diagnose-Endpunkte: Falls eine andere Firmware sie nicht
 bereitstellt, bleiben die Wetterwerte funktionsfähig und nur die betroffenen Diagnosewerte
 werden nicht verfügbar.
