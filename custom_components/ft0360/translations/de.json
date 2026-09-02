@@ -1,0 +1,98 @@
+{
+  "title": "LANDI FT0360 Wetterstation",
+  "config": {
+    "step": {
+      "user": {
+        "title": "LANDI FT0360 einrichten",
+        "description": "Gib die lokale IP-Adresse oder den Hostnamen der Wetterstation ein.",
+        "data": { "host": "IP-Adresse oder Hostname", "scan_interval": "Abfrageintervall" },
+        "data_description": {
+          "host": "Zum Beispiel 192.168.1.236 oder wetterstation.local",
+          "scan_interval": "Sekunden zwischen den Aktualisierungen (5 bis 300)"
+        }
+      },
+      "reconfigure": {
+        "title": "LANDI FT0360 neu konfigurieren",
+        "description": "Ändere die lokale Adresse oder das Abfrageintervall.",
+        "data": { "host": "IP-Adresse oder Hostname", "scan_interval": "Abfrageintervall" },
+        "data_description": {
+          "host": "Die neue lokale Adresse derselben Wetterstation",
+          "scan_interval": "Sekunden zwischen den Aktualisierungen (5 bis 300)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Die Wetterstation ist nicht erreichbar. Prüfe Adresse und Netzwerk.",
+      "invalid_host": "Gib nur eine gültige IP-Adresse oder einen Hostnamen ein, optional mit Port.",
+      "invalid_response": "Das Gerät antwortet, liefert aber keine gültigen FT0360-Daten.",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "already_configured": "Diese Wetterstation ist bereits eingerichtet.",
+      "reconfigure_successful": "Die Wetterstation wurde erfolgreich neu konfiguriert.",
+      "wrong_device": "Diese Adresse gehört zu einer anderen Wetterstation. Füge sie stattdessen als neue Integration hinzu."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "LANDI FT0360 Optionen",
+        "description": "Lege fest, wie oft die lokale Station abgefragt wird.",
+        "data": { "scan_interval": "Abfrageintervall" },
+        "data_description": { "scan_interval": "Sekunden zwischen den Aktualisierungen (5 bis 300)" }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "indoor_temperature": { "name": "Innentemperatur" },
+      "indoor_humidity": { "name": "Innenluftfeuchtigkeit" },
+      "outdoor_temperature": { "name": "Aussentemperatur" },
+      "outdoor_humidity": { "name": "Aussenluftfeuchtigkeit" },
+      "pressure_absolute": { "name": "Absoluter Luftdruck" },
+      "pressure_relative": { "name": "Relativer Luftdruck" },
+      "max_daily_gust": { "name": "Maximale Tagesböe" },
+      "wind_speed": { "name": "Windgeschwindigkeit" },
+      "wind_gust": { "name": "Windböe" },
+      "wind_direction": { "name": "Windrichtung" },
+      "wind_average_2_minute": { "name": "Windmittel 2 Minuten" },
+      "wind_direction_average_2_minute": { "name": "Windrichtungsmittel 2 Minuten" },
+      "wind_average_10_minute": { "name": "Windmittel 10 Minuten" },
+      "wind_direction_average_10_minute": { "name": "Windrichtungsmittel 10 Minuten" },
+      "rain_rate": { "name": "Regenrate" },
+      "rain_hour": { "name": "Regen diese Stunde" },
+      "rain_day": { "name": "Regen heute" },
+      "rain_week": { "name": "Regen diese Woche" },
+      "rain_month": { "name": "Regen diesen Monat" },
+      "rain_year": { "name": "Regen dieses Jahr" },
+      "rain_total": { "name": "Regen gesamt" },
+      "solar_radiation": { "name": "Solarstrahlung" },
+      "uv_index": { "name": "UV-Index" },
+      "wind_direction_cardinal": {
+        "name": "Windrichtung Himmelsrichtung",
+        "state": {
+          "n": "N", "ne": "NO", "e": "O", "se": "SO",
+          "s": "S", "sw": "SW", "w": "W", "nw": "NW"
+        }
+      },
+      "connection_status": {
+        "name": "Verbindungsstatus",
+        "state": {
+          "idle": "Inaktiv",
+          "connecting": "Verbindung zum Router wird hergestellt",
+          "wrong_password": "Falsches Passwort",
+          "router_not_found": "Router nicht gefunden",
+          "connection_failed": "Verbindung fehlgeschlagen",
+          "connected": "Verbunden",
+          "unknown": "Unbekannt"
+        }
+      },
+      "wifi_signal_level": { "name": "WLAN-Signalstufe" },
+      "ip_address": { "name": "IP-Adresse" },
+      "gateway": { "name": "Gateway" },
+      "firmware_version": { "name": "Firmware-Version" },
+      "firmware_build": { "name": "Firmware-Build" }
+    },
+    "binary_sensor": { "battery_low": { "name": "Batterie schwach" } }
+  }
+}

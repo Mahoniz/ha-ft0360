@@ -1,0 +1,98 @@
+{
+  "title": "LANDI FT0360 Weather Station",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up LANDI FT0360",
+        "description": "Enter the local IP address or hostname of the weather station.",
+        "data": { "host": "IP address or hostname", "scan_interval": "Polling interval" },
+        "data_description": {
+          "host": "For example 192.168.1.236 or weather-station.local",
+          "scan_interval": "Seconds between updates (5 to 300)"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure LANDI FT0360",
+        "description": "Change the local address or polling interval.",
+        "data": { "host": "IP address or hostname", "scan_interval": "Polling interval" },
+        "data_description": {
+          "host": "The new local address of the same weather station",
+          "scan_interval": "Seconds between updates (5 to 300)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not connect to the station. Check the address and network.",
+      "invalid_host": "Enter only a valid IP address or hostname, optionally followed by a port.",
+      "invalid_response": "The device responded, but its data is not a valid FT0360 response.",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This weather station is already configured.",
+      "reconfigure_successful": "The weather station was reconfigured successfully.",
+      "wrong_device": "This address belongs to a different weather station. Add it as a new integration instead."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "LANDI FT0360 options",
+        "description": "Choose how often the local station is polled.",
+        "data": { "scan_interval": "Polling interval" },
+        "data_description": { "scan_interval": "Seconds between updates (5 to 300)" }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "indoor_temperature": { "name": "Indoor temperature" },
+      "indoor_humidity": { "name": "Indoor humidity" },
+      "outdoor_temperature": { "name": "Outdoor temperature" },
+      "outdoor_humidity": { "name": "Outdoor humidity" },
+      "pressure_absolute": { "name": "Absolute air pressure" },
+      "pressure_relative": { "name": "Relative air pressure" },
+      "max_daily_gust": { "name": "Maximum daily gust" },
+      "wind_speed": { "name": "Wind speed" },
+      "wind_gust": { "name": "Wind gust" },
+      "wind_direction": { "name": "Wind direction" },
+      "wind_average_2_minute": { "name": "Wind average 2 minutes" },
+      "wind_direction_average_2_minute": { "name": "Wind direction average 2 minutes" },
+      "wind_average_10_minute": { "name": "Wind average 10 minutes" },
+      "wind_direction_average_10_minute": { "name": "Wind direction average 10 minutes" },
+      "rain_rate": { "name": "Rain rate" },
+      "rain_hour": { "name": "Rain this hour" },
+      "rain_day": { "name": "Rain today" },
+      "rain_week": { "name": "Rain this week" },
+      "rain_month": { "name": "Rain this month" },
+      "rain_year": { "name": "Rain this year" },
+      "rain_total": { "name": "Rain total" },
+      "solar_radiation": { "name": "Solar radiation" },
+      "uv_index": { "name": "UV index" },
+      "wind_direction_cardinal": {
+        "name": "Wind direction cardinal",
+        "state": {
+          "n": "N", "ne": "NE", "e": "E", "se": "SE",
+          "s": "S", "sw": "SW", "w": "W", "nw": "NW"
+        }
+      },
+      "connection_status": {
+        "name": "Connection status",
+        "state": {
+          "idle": "Idle",
+          "connecting": "Connecting to router",
+          "wrong_password": "Wrong password",
+          "router_not_found": "Target router not found",
+          "connection_failed": "Connection failed",
+          "connected": "Connected",
+          "unknown": "Unknown"
+        }
+      },
+      "wifi_signal_level": { "name": "Wi-Fi signal level" },
+      "ip_address": { "name": "IP address" },
+      "gateway": { "name": "Gateway" },
+      "firmware_version": { "name": "Firmware version" },
+      "firmware_build": { "name": "Firmware build" }
+    },
+    "binary_sensor": { "battery_low": { "name": "Battery low" } }
+  }
+}
