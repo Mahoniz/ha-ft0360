@@ -1,9 +1,9 @@
 {
-  "title": "LANDI FT0360 Weather Station",
+  "title": "FT0360 Weather Station",
   "config": {
     "step": {
       "user": {
-        "title": "Set up LANDI FT0360",
+        "title": "Set up FT0360",
         "description": "Enter the local IP address or hostname of the weather station.",
         "data": {
           "host": "IP address or hostname",
@@ -17,7 +17,7 @@
         }
       },
       "reconfigure": {
-        "title": "Reconfigure LANDI FT0360",
+        "title": "Reconfigure FT0360",
         "description": "Change the local address or polling interval.",
         "data": {
           "host": "IP address or hostname",
@@ -44,7 +44,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "LANDI FT0360 options",
+        "title": "FT0360 options",
         "description": "Choose how often the local station is polled.",
         "data": {
           "scan_interval": "Polling interval"

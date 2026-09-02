@@ -1,8 +1,8 @@
-# FT0360 Wetterstation – lokale Home-Assistant-Integration für LANDI & OEM
+# FT0360 Wetterstation – lokale Home-Assistant-Integration für OEM-Modelle
 
-![LANDI FT0360 Wetterstation](assets/ft0360-integration.png)
+![FT0360 Wetterstation](assets/ft0360-integration.png)
 
-Diese Custom Component liest die LANDI/FT0360 WiFi-Wetterstation vollständig lokal aus.
+Diese Custom Component liest kompatible FT0360 WiFi-Wetterstationen vollständig lokal aus.
 Es werden keine Cloud-Dienste, Konten oder API-Schlüssel benötigt.
 
 ## Modell und OEM-Hinweis
@@ -120,7 +120,7 @@ Solange das Projekt nicht im HACS-Standardkatalog veröffentlicht ist:
 2. In HACS **Integrationen** öffnen.
 3. Über das Menü **Benutzerdefinierte Repositories** wählen.
 4. Die URL des Repositorys eintragen und als Kategorie **Integration** auswählen.
-5. `LANDI FT0360 Weather Station` herunterladen.
+5. `FT0360 Weather Station` herunterladen.
 6. Home Assistant neu starten.
 
 Die Metadaten in `custom_components/ft0360/manifest.json` verweisen auf dieses Repository.
@@ -154,7 +154,7 @@ config/
 ## Einrichtung
 
 1. **Einstellungen → Geräte & Dienste → Integration hinzufügen** öffnen.
-2. Nach **LANDI FT0360** suchen.
+2. Nach **FT0360** suchen.
 3. IP-Adresse oder Hostname eintragen, beispielsweise `192.168.1.236`.
 4. Den Messbereich wählen: **Innen & Aussen**, **nur Innen** oder **nur Aussen**.
 5. Das Abfrageintervall wählen; voreingestellt sind 10 Sekunden.
@@ -191,7 +191,7 @@ Adresse wird geprüft, dass dort weiterhin dieselbe Station erreichbar ist.
   `--` oder keinen Zahlenwert. Andere Sensoren bleiben verfügbar.
 - **Alle Sensoren nicht verfügbar:** Nach einem Timeout markiert Home Assistant die
   Coordinator-Entities als nicht verfügbar und versucht es beim nächsten Intervall erneut.
-- **Diagnosen:** Unter **Geräte & Dienste → LANDI FT0360 → Drei-Punkte-Menü → Diagnose
+- **Diagnosen:** Unter **Geräte & Dienste → FT0360 → Drei-Punkte-Menü → Diagnose
   herunterladen**. Host und MAC-Adresse werden ausgeblendet.
 
 ## Entwicklung und Tests

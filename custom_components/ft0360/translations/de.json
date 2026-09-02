@@ -1,9 +1,9 @@
 {
-  "title": "LANDI FT0360 Wetterstation",
+  "title": "FT0360 Wetterstation",
   "config": {
     "step": {
       "user": {
-        "title": "LANDI FT0360 einrichten",
+        "title": "FT0360 einrichten",
         "description": "Gib die lokale IP-Adresse oder den Hostnamen der Wetterstation ein.",
         "data": { "host": "IP-Adresse oder Hostname", "scan_interval": "Abfrageintervall", "sensor_scope": "Messbereich" },
         "data_description": {
@@ -13,7 +13,7 @@
         }
       },
       "reconfigure": {
-        "title": "LANDI FT0360 neu konfigurieren",
+        "title": "FT0360 neu konfigurieren",
         "description": "Ändere die lokale Adresse oder das Abfrageintervall.",
         "data": { "host": "IP-Adresse oder Hostname", "scan_interval": "Abfrageintervall" },
         "data_description": {
@@ -37,7 +37,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "LANDI FT0360 Optionen",
+        "title": "FT0360 Optionen",
         "description": "Lege fest, wie oft die lokale Station abgefragt wird.",
         "data": { "scan_interval": "Abfrageintervall" },
         "data_description": { "scan_interval": "Sekunden zwischen den Aktualisierungen (5 bis 300)" }

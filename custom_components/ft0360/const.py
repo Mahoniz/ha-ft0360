@@ -19,7 +19,7 @@ ENDPOINT_CONNECT_STATUS: Final = "/config?command=connect_status"
 ENDPOINT_DEBUG: Final = "/config?command=debug"
 ENDPOINT_FIRMWARE: Final = "/config?command=Firmware"
 
-MANUFACTURER: Final = "LANDI"
+MANUFACTURER: Final = "OEM"
 MODEL: Final = "FT0360"
 DEVICE_NAME: Final = "FT0360"
 
